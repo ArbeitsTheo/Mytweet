@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	<div class="position-relative">
+		<div class="position-absolute top-0 end-0">
+			<a href="{{ path('app_logout') }}" class="btn btn-link">
+				<i class="bi bi-box-arrow-in-right"></i>
+			</a>
+		</div>
+	</div>
+	{# {{ user.getUsername()}} #}
+	<main class="container col-4 mt-4">
+		<section class="card mb-4">
+			{{form_start(newFormTweet)}}
+			<div class="card-body">
+				{{form_widget(newFormTweet.content, {'attr': {'placeholder': 'content', 'class': 'form-control'}})}}
+			</div>
+			<div class="card-footer d-flex justify-content-end">
+				<button class="btn btn-primary" type="submit">
+					<i class="bi bi-send-fill"></i>
+				</button>
+			</div>
+			{{form_end(newFormTweet)}}
+		</section>
+		<section class="feed">
+			{% for tweet in tweets %}
+				<div class="card mb-4">
+					<a class="text-decoration-none text-dark" href="{{ path('app_tweet_show', {id: tweet.id}) }}">
+						<div class="card-header">
+							{{ tweet.getUserId().getUsername() }}
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								{{ tweet.getContent() }}
+							</p>
+						</div>
+					</a>
+					<div class="card-footer text-muted d-flex justify-content-end">
+						{% if user.getUsername() == tweet.getUserId().getUsername() %}
+							<a href="{{ path('app_tweet_delete', {id: tweet.id}) }}" class="btn btn-link">
+								<i class="bi bi-trash-fill text-danger"></i>
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</main>
+{% endblock %}

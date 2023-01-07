@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login
+{% endblock %}
+
+{% block body %}
+	{% if error %}
+		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
+
+	<main class="container">
+		<form action="{{ path('app_login') }}" method="post">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+				<div class="w-full max-w-md space-y-8">
+					<div>
+						<h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Login</h2>
+					</div>
+					<div class="input-group mb-3 w-7">
+						<span for="username" class="input-group-text" id="inputGroup-sizing-default">Username</span>
+						<input type="text" id="username" name="_username" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+					</div>
+					<div class="input-group mb-3">
+						<span for="password" class="input-group-text" id="inputGroup-sizing-default">Password</span>
+						<input type="password" id="password" name="_password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+					</div>
+					<a href="register">
+						Créer un compte
+					</a>
+					<br/>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</main>
+{% endblock %}

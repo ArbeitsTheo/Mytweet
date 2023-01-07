@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign in
+{% endblock %}
+
+{% block body %}
+	<main class="container">
+		{{ form_start(form, {'method': 'POST'}) }}
+		<div>
+			<h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+		</div>
+		<div class="input-group mb-3 w-7">
+			<span for="username" class="input-group-text" id="inputGroup-sizing-default">Username</span>
+			{{form_widget(form.username, {'attr': {'placeholder': 'Username', 'class': 'form-control'}})}}
+		</div>
+
+		<div class="input-group mb-3 w-7">
+			<span for="username" class="input-group-text" id="inputGroup-sizing-default">Password</span>
+			{{form_widget(form.password, {'attr': {'placeholder': 'Password', 'class': 'form-control'}})}}
+		</div>
+		<button type="submit" class="btn btn-primary">
+			Sign in
+		</button>
+		{{ form_end(form) }}
+	</main>
+{% endblock %}

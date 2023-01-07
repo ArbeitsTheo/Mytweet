@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tweet
+{% endblock %}
+
+{% block body %}
+	<div class="position-relative">
+		<div class="position-absolute top-0 end-0">
+			<a href="{{ path('app_logout') }}" class="btn btn-link">
+				<i class="bi bi-box-arrow-in-right"></i>
+			</a>
+		</div>
+	</div>
+	<main class="container col-4 mt-4">
+		<section class="">
+			<div class="card mb-4">
+				<div class="card-header text-bg-primary">
+					{{ tweet.getUserId() }}
+				</div>
+				<div class="card-body">
+					<p class="card-text">
+						{{ tweet.getContent() }}
+					</p>
+				</div>
+			</div>
+		</section>
+		<section class="feed">
+			{% for response in tweet.getTweets() %}
+				<div class="card mb-4">
+					<a class="text-decoration-none text-dark" href="{{ path('app_tweet_show', {id: tweet.id}) }}">
+						<div class="card-header">
+							{{ response.getUserId() }}
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								{{ response.getContent() }}
+							</p>
+						</div>
+					</a>
+					<div class="card-footer text-muted d-flex justify-content-end">
+						<button id="responseButton" href="#" type="button" class="btn btn-link">
+							<i class="bi bi-chat-fill text-secondary"></i>
+						</button>
+						{% if user.getId() == response.getUserId().getId() %}
+							<a href="{{ path('app_tweet_delete', {id: response.id}) }}" class="btn btn-link">
+								<i class="bi bi-trash-fill text-danger"></i>
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</main>
+	<section class="position-fixed col-4 bottom-0 end-0 mb-4">
+		{{form_start(newFormTweet)}}
+		<div class="d-flex">
+			{{form_widget(newFormTweet.content, {'attr': {'placeholder': 'content', 'class': 'form-control'}})}}
+			<button class="btn btn-primary" type="submit">
+				<i class="bi bi-send-fill"></i>
+			</button>
+		</div>
+		{{form_end(newFormTweet)}}
+	</section>
+{% endblock %}
+
+{# {{ response.createdAt ? tweet.createdAt|date('Y-m-d H:i:s') : '' }}
+	{{ tweet.updatedAt ? tweet.updatedAt|date('Y-m-d H:i:s') : '' }} #}
